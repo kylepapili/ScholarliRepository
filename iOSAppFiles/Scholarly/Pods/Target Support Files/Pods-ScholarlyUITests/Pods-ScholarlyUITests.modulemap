@@ -1,0 +1,6 @@
+framework module Pods_ScholarlyUITests {
+  umbrella header "Pods-ScholarlyUITests-umbrella.h"
+
+  export *
+  module * { export * }
+}

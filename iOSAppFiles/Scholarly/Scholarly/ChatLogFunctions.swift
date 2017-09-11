@@ -8,6 +8,22 @@
 
 import Foundation
 import Firebase
+import UserNotifications
+
+
+func sendLocalNotification(title: String, subtitle: String, body: String) {
+    let content = UNMutableNotificationContent()
+    content.title = title
+    content.subtitle = subtitle
+    content.body = body
+    content.badge = 1
+    
+    let trigger = UNTimeIntervalNotificationTrigger(timeInterval: 0.01, repeats: false)
+    let request = UNNotificationRequest(identifier: "timerDone", content: content, trigger: trigger)
+    
+    UNUserNotificationCenter.current().add(request, withCompletionHandler: nil)
+}
+
 
 typealias ClassDataClosure = ([[String: AnyObject]]) -> Void
 

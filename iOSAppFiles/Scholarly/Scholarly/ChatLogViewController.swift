@@ -188,6 +188,7 @@ class ChatLogViewController: UIViewController , UITableViewDelegate , UITableVie
                     self.chatLog.append(messageFinal)
                 }
                 self.ProgressViewBar.isHidden = true
+                //Stop!
                 self.tableView.reloadData()
                 self.tableViewScrollToBottom(animated: false, delay: true)
                 self.chatLog.sort(by: { (messageOne, messageTwo) -> Bool in
@@ -275,6 +276,7 @@ class ChatLogViewController: UIViewController , UITableViewDelegate , UITableVie
                     if message.messageID == messageID {
                         self.chatLog[count] = newMessage
                         self.tableView.reloadData()
+                        
                     }
                     count = count + 1
                 }
@@ -349,6 +351,7 @@ class ChatLogViewController: UIViewController , UITableViewDelegate , UITableVie
                 }
             }
         })
+        
     }
     
     // MARK: - Table View Functions
@@ -384,36 +387,16 @@ class ChatLogViewController: UIViewController , UITableViewDelegate , UITableVie
             cell.UserNameOutlet.text = "Scholarly App"
             return cell
         }
+        
+        //Chat Log is NOT empty: 
+        
         let cellMessage = chatLog[indexPath.row]
         switch cellMessage.messageType {
         case .text :
             let cell = tableView.dequeueReusableCell(withIdentifier: "messageCell", for: indexPath) as! ChatMessageTableViewCell
             
-            
             cell.message = chatLog[indexPath.row]
-            
-            cell.MessageText.text = chatLog[indexPath.row].message
-            
-            cell.MessageText.sizeToFit()
-            
-            cell.MessageText.isEditable = false
-            
-            cell.MessageText.dataDetectorTypes = UIDataDetectorTypes.all;
-            
-            cell.MessageText.textContainerInset = UIEdgeInsets.zero
-            
-            cell.UserNameOutlet.text = "\(chatLog[indexPath.row].userFirstName) \(chatLog[indexPath.row].userLastName)"
-            
-            cell.UserNameOutlet.isEditable = false
-            
-            cell.UserNameOutlet.textContainerInset = UIEdgeInsets.zero
-            
-            if cellMessage.liked {
-                cell.LikeButton.setImage(#imageLiteral(resourceName: "RedHeart"), for: .normal)
-            } else {
-                cell.LikeButton.setImage(#imageLiteral(resourceName: "GrayHeart"), for: .normal)
-            }
-            
+            cell.PrepareCellForDisplay()
             
             return cell
             
@@ -421,35 +404,24 @@ class ChatLogViewController: UIViewController , UITableViewDelegate , UITableVie
             let cell = tableView.dequeueReusableCell(withIdentifier: "imageCell", for: indexPath) as! ChatImageTableViewCell
             
             cell.message = self.chatLog[indexPath.row]
+            cell.PrepareCellForDisplay()
             
-            Storage.storage().reference(forURL: cellMessage.imageURL!).getData(maxSize: INT64_MAX, completion: { (data, error) in
+            Storage.storage().reference(forURL: cell.message.imageURL!).getData(maxSize: INT64_MAX, completion: { (data, error) in
                 guard error == nil else {
                     print("Error downloading: \(error!)")
                     return
                 }
                 let messageImage = UIImage.init(data: data!, scale: 50)
-                self.imageCache.setObject(messageImage!, forKey: cellMessage.imageURL! as NSString)
+                self.imageCache.setObject(messageImage!, forKey: cell.message.imageURL! as NSString)
                 // check if the cell is still on screen, if so, update cell image
-                if cell == tableView.cellForRow(at: indexPath) {
+                if cell == self.tableView.cellForRow(at: indexPath) {
                     DispatchQueue.main.async {
                         cell.ImageViewOutlet.image = messageImage
-                        cell.UserNameOutlet.text = "\(self.chatLog[indexPath.row].userFirstName ) \(self.chatLog[indexPath.row].userLastName )"
                         cell.setNeedsLayout()
                     }
                 }
             })
             
-            if cellMessage.liked {
-                cell.LikeButton.setImage(#imageLiteral(resourceName: "RedHeart"), for: .normal)
-            } else {
-                cell.LikeButton.setImage(#imageLiteral(resourceName: "GrayHeart"), for: .normal)
-            }
-            
-            //Flag Button is visible for image messages
-            cell.FlagButton.isHidden = false
-            
-            cell.ActivityIndicator.stopAnimating()
-            cell.ActivityIndicator.isHidden = true
             
             return cell
         }
@@ -734,6 +706,13 @@ class ChatLogViewController: UIViewController , UITableViewDelegate , UITableVie
                     likedStr == "FALSE"
                 }
                 
+                var flaggedStr = ""
+                if message.flagged {
+                    flaggedStr = "TRUE"
+                } else {
+                    flaggedStr = "FALSE"
+                }
+                
                 let childUpdates = ["messageType" : String(describing: message.messageType),
                                     "userFirstName" : message.userFirstName as String,
                                     "userLastName": message.userLastName as String,
@@ -742,7 +721,8 @@ class ChatLogViewController: UIViewController , UITableViewDelegate , UITableVie
                                     "imageURL" : message.imageURL,
                                     "uid" : message.uid,
                                     "liked" : likedStr,
-                                    "messageID": sendRef.key]
+                                    "messageID": sendRef.key,
+                                    "flagged" : flaggedStr]
                 
                 let dateFormatter = DateFormatter()
                 dateFormatter.dateFormat = "EEE, dd MMM yyyy hh:mm:ss +zzzz"

@@ -172,6 +172,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate, UNUserNotificationCenterD
         print("Title:\(title) + body:\(body)")
         //self.showAlertAppDelegate(title: title,message:body,buttonTitle:"ok",window:self.window!)
         
+        print("LOCAL NOTIFICATION Should be sending! Need to impliment")
         
     }
     

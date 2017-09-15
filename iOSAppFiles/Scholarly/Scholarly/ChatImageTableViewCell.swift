@@ -31,6 +31,24 @@ class ChatImageTableViewCell: UITableViewCell {
         ActivityIndicator.layer.zPosition = 1
     }
     
+    func PrepareCellForDisplay() {
+        
+        self.UserNameOutlet.text = "\(self.message.userFirstName ) \(self.message.userLastName )"
+        
+        if self.message.liked {
+            self.LikeButton.setImage(#imageLiteral(resourceName: "RedHeart"), for: .normal)
+        } else {
+            self.LikeButton.setImage(#imageLiteral(resourceName: "GrayHeart"), for: .normal)
+        }
+        
+        //Flag Button is visible for image messages
+        self.FlagButton.isHidden = false
+        
+        self.ActivityIndicator.stopAnimating()
+        self.ActivityIndicator.isHidden = true
+    }
+    
+    
     
     @IBAction func Liked(_ sender: Any) {
         

@@ -45,6 +45,32 @@ class ChatMessageTableViewCell: UITableViewCell {
             FlagButton.setImage(#imageLiteral(resourceName: "EmptyFlag"), for: .normal)
         }
     }
+    
+    func PrepareCellForDisplay() {
+        self.MessageText.text = self.message.message
+        
+        self.MessageText.sizeToFit()
+        
+        self.MessageText.isEditable = false
+        
+        self.MessageText.dataDetectorTypes = UIDataDetectorTypes.all;
+        
+        self.MessageText.textContainerInset = UIEdgeInsets.zero
+        
+        self.UserNameOutlet.text = "\(self.message.userFirstName) \(self.message.userLastName)"
+        
+        self.UserNameOutlet.isEditable = false
+        
+        self.UserNameOutlet.textContainerInset = UIEdgeInsets.zero
+        
+        if self.message.liked {
+            self.LikeButton.setImage(#imageLiteral(resourceName: "RedHeart"), for: .normal)
+        } else {
+            self.LikeButton.setImage(#imageLiteral(resourceName: "GrayHeart"), for: .normal)
+        }
+    }
+    
+    
     @IBAction func Flagged(_ sender: Any) {
         if(self.delegate != nil){
             self.delegate?.callSegueFromCell(message: message)

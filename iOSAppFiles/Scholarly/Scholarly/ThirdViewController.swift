@@ -20,6 +20,7 @@ class ThirdViewController: UIViewController , UITableViewDelegate , UITableViewD
         // Do any additional setup after loading the view.
         latestLeaderboard { (result) in
             print("BIG RESULT: \(result)")
+            lytLeaderBoardChecked()
             self.leaderboardData = result
             self.tableView.reloadData()
         }

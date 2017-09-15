@@ -256,6 +256,7 @@ func likeMessage(id : String, classID : String, uid: String) {
     updateUserScore(uid: uid, add: true) { 
         let dbRef = Database.database().reference().child("SchoolData").child("West Morris Mendham").child("ClassData").child(classID).child("Messages").child(id)
         dbRef.child("liked").setValue("TRUE")
+        lytMessageUnHearted()
     }
 }
 

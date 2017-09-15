@@ -23,6 +23,12 @@
 		5E2DCF411F4B9FCC0078ACAB /* flagFunctions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5E2DCF401F4B9FCC0078ACAB /* flagFunctions.swift */; };
 		5E2DCF431F4BA2060078ACAB /* FlagViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5E2DCF421F4BA2060078ACAB /* FlagViewController.swift */; };
 		5E2EB7D41F33CBA400DB30EF /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 5E2EB7D31F33CBA400DB30EF /* GoogleService-Info.plist */; };
+		5E2ECAB71F6B6604005F309C /* FirebaseAnalyticsLogs.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5E2ECAB61F6B6604005F309C /* FirebaseAnalyticsLogs.swift */; };
+		5E2ECAB81F6B6622005F309C /* FirebaseAnalyticsLogs.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5E2ECAB61F6B6604005F309C /* FirebaseAnalyticsLogs.swift */; };
+		5E2ECABB1F6B7847005F309C /* AdminSettingsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5E2ECABA1F6B7847005F309C /* AdminSettingsViewController.swift */; };
+		5E2ECABD1F6B7A89005F309C /* AdminTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5E2ECABC1F6B7A89005F309C /* AdminTableViewCell.swift */; };
+		5E2ECABF1F6B7C3E005F309C /* AdminClassEditorViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5E2ECABE1F6B7C3E005F309C /* AdminClassEditorViewController.swift */; };
+		5E2ECAC11F6B8375005F309C /* AdminEditClassViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5E2ECAC01F6B8375005F309C /* AdminEditClassViewController.swift */; };
 		5E3762CB1F3C117B00A47EBB /* ImageDisplayViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5E3762CA1F3C117B00A47EBB /* ImageDisplayViewController.swift */; };
 		5E419DA31F32BD8B00AA062D /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 5E419DA21F32BD8B00AA062D /* Main.storyboard */; };
 		5E419DA51F32C8AA00AA062D /* AboutViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5E419DA41F32C8AA00AA062D /* AboutViewController.swift */; };
@@ -116,6 +122,11 @@
 		5E2DCF401F4B9FCC0078ACAB /* flagFunctions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = flagFunctions.swift; sourceTree = "<group>"; };
 		5E2DCF421F4BA2060078ACAB /* FlagViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FlagViewController.swift; sourceTree = "<group>"; };
 		5E2EB7D31F33CBA400DB30EF /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
+		5E2ECAB61F6B6604005F309C /* FirebaseAnalyticsLogs.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FirebaseAnalyticsLogs.swift; sourceTree = "<group>"; };
+		5E2ECABA1F6B7847005F309C /* AdminSettingsViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AdminSettingsViewController.swift; sourceTree = "<group>"; };
+		5E2ECABC1F6B7A89005F309C /* AdminTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AdminTableViewCell.swift; sourceTree = "<group>"; };
+		5E2ECABE1F6B7C3E005F309C /* AdminClassEditorViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AdminClassEditorViewController.swift; sourceTree = "<group>"; };
+		5E2ECAC01F6B8375005F309C /* AdminEditClassViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AdminEditClassViewController.swift; sourceTree = "<group>"; };
 		5E3762CA1F3C117B00A47EBB /* ImageDisplayViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ImageDisplayViewController.swift; sourceTree = "<group>"; };
 		5E419DA21F32BD8B00AA062D /* Main.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = Main.storyboard; sourceTree = "<group>"; };
 		5E419DA41F32C8AA00AA062D /* AboutViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AboutViewController.swift; sourceTree = "<group>"; };
@@ -221,6 +232,17 @@
 			name = Frameworks;
 			sourceTree = "<group>";
 		};
+		5E2ECAB91F6B7809005F309C /* Admin */ = {
+			isa = PBXGroup;
+			children = (
+				5E2ECABA1F6B7847005F309C /* AdminSettingsViewController.swift */,
+				5E2ECABC1F6B7A89005F309C /* AdminTableViewCell.swift */,
+				5E2ECABE1F6B7C3E005F309C /* AdminClassEditorViewController.swift */,
+				5E2ECAC01F6B8375005F309C /* AdminEditClassViewController.swift */,
+			);
+			name = Admin;
+			sourceTree = "<group>";
+		};
 		5E4ABA6E1EFF84E100F9FC48 /* Firebase Functions */ = {
 			isa = PBXGroup;
 			children = (
@@ -230,6 +252,7 @@
 				5EDF16B41F0C3911007D7E01 /* AgendaFunctions.swift */,
 				5E232B3A1F4528340033C130 /* ClassFunctions.swift */,
 				5E2DCF401F4B9FCC0078ACAB /* flagFunctions.swift */,
+				5E2ECAB61F6B6604005F309C /* FirebaseAnalyticsLogs.swift */,
 			);
 			name = "Firebase Functions";
 			sourceTree = "<group>";
@@ -258,6 +281,7 @@
 		5E69E13A1F10B76300951789 /* Fourth */ = {
 			isa = PBXGroup;
 			children = (
+				5E2ECAB91F6B7809005F309C /* Admin */,
 				5E07ED0F1EFE2B7E006DBE2A /* FourthViewController.swift */,
 				5E69E13B1F10BB9B00951789 /* SettingsSelectionTableViewCell.swift */,
 				5E1A64171F15E14A003A48C7 /* ProfileViewController.swift */,
@@ -761,6 +785,7 @@
 				5E232B391F45000D0033C130 /* AddClassViewController.swift in Sources */,
 				5E5D4DFE1F05FECE0035454D /* AgendaTableViewCell.swift in Sources */,
 				5EB338501F020497002A02A7 /* Structures.swift in Sources */,
+				5E2ECABF1F6B7C3E005F309C /* AdminClassEditorViewController.swift in Sources */,
 				5E5D4E001F0605F10035454D /* NewAgendaItemViewController.swift in Sources */,
 				5E8DA79A1EFA1B7400C5DBFC /* UserInfoViewController.swift in Sources */,
 				5E1A641E1F160774003A48C7 /* FeatureRequestViewController.swift in Sources */,
@@ -782,6 +807,7 @@
 				5EDF16B51F0C3911007D7E01 /* AgendaFunctions.swift in Sources */,
 				5EFE594E1EFAD21300390515 /* ClassSelectorTableViewCell.swift in Sources */,
 				5E69E1381F108A6400951789 /* AssignmentEditorViewController.swift in Sources */,
+				5E2ECABD1F6B7A89005F309C /* AdminTableViewCell.swift in Sources */,
 				5EC6BD721F185E69005675F5 /* IQUIWindow+Hierarchy.swift in Sources */,
 				5E474C621F5BC0E300674F8C /* MessageLabel.swift in Sources */,
 				5EC6BD701F185E69005675F5 /* IQUIView+Hierarchy.swift in Sources */,
@@ -806,7 +832,9 @@
 				5E0D9F761F5BE75000AD44EF /* InviteFromContactsViewController.swift in Sources */,
 				5E07ED0E1EFE2B76006DBE2A /* ThirdViewController.swift in Sources */,
 				5E9416C81F305A81005D84FC /* leaderboard.swift in Sources */,
+				5E2ECAB71F6B6604005F309C /* FirebaseAnalyticsLogs.swift in Sources */,
 				5EC6BD781F185E6A005675F5 /* IQBarButtonItem.swift in Sources */,
+				5E2ECABB1F6B7847005F309C /* AdminSettingsViewController.swift in Sources */,
 				5EC6BD711F185E69005675F5 /* IQUIViewController+Additions.swift in Sources */,
 				5EC6BD731F185E69005675F5 /* IQKeyboardManagerConstants.swift in Sources */,
 				5E99355F1EF99426004201AB /* LoginScreenViewController.swift in Sources */,
@@ -817,6 +845,7 @@
 				5E474C641F5BCB0D00674F8C /* ClassEditorViewController.swift in Sources */,
 				5E99352E1EF99153004201AB /* FirstViewController.swift in Sources */,
 				5EC6BD771F185E6A005675F5 /* IQTextView.swift in Sources */,
+				5E2ECAC11F6B8375005F309C /* AdminEditClassViewController.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -824,6 +853,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				5E2ECAB81F6B6622005F309C /* FirebaseAnalyticsLogs.swift in Sources */,
 				5E9935431EF99153004201AB /* ScholarlyTests.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

@@ -22,6 +22,13 @@ class ClassSelectorTableViewCell: UITableViewCell {
     @IBOutlet var ProfilePeriodLabel: UILabel!
     @IBOutlet var ProfileClassIDLabel: UILabel!
     
+    //MARK: - Admin View Outlets
+    @IBOutlet var AdminClassLabel: UILabel!
+    @IBOutlet var AdminTeacherLabel: UILabel!
+    @IBOutlet var AdminPeriodLabel: UILabel!
+    @IBOutlet var AdminClassIDLabel: UILabel!
+    
+    
     override func awakeFromNib() {
         super.awakeFromNib()
         // Initialization code

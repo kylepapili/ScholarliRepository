@@ -12,16 +12,25 @@ import FirebaseAuth
 
 class FourthViewController: UIViewController , UITableViewDelegate , UITableViewDataSource {
     //Variables
-    let options : Array = ["Your Profile" , "About" , "Report a Bug" , "Request a Feature" , "Donate" , "Logout"]
-    let optionImages : [UIImage] = [#imageLiteral(resourceName: "Profile") , #imageLiteral(resourceName: "About") , #imageLiteral(resourceName: "Bug") , #imageLiteral(resourceName: "Feature") , #imageLiteral(resourceName: "Donation") , #imageLiteral(resourceName: "Logout")]
+    var options : Array = ["Your Profile" , "About" , "Report a Bug" , "Request a Feature" , "Donate" , "Logout"]
+    var optionImages : [UIImage] = [#imageLiteral(resourceName: "Profile") , #imageLiteral(resourceName: "About") , #imageLiteral(resourceName: "Bug") , #imageLiteral(resourceName: "Feature") , #imageLiteral(resourceName: "Donation") , #imageLiteral(resourceName: "Logout")]
     
     //Outlets
     @IBOutlet var TableView: UITableView!
     
     override func viewDidLoad() {
         super.viewDidLoad()
-
-        // Do any additional setup after loading the view.
+        userIsAdmin(uid: (Auth.auth().currentUser?.uid)!) { (isAdmin) in
+            if (isAdmin) {
+                print("USER IS AN ADMINISTRATOR")
+                self.options = ["Your Profile" , "About" , "Report a Bug" , "Request a Feature" , "Donate" , "Admin Menu", "Logout"]
+                self.optionImages = [#imageLiteral(resourceName: "Profile") , #imageLiteral(resourceName: "About") , #imageLiteral(resourceName: "Bug") , #imageLiteral(resourceName: "Feature") , #imageLiteral(resourceName: "Donation") , #imageLiteral(resourceName: "Admin"), #imageLiteral(resourceName: "Logout")]
+                self.TableView.reloadData()
+            } else {
+                self.options = ["Your Profile" , "About" , "Report a Bug" , "Request a Feature" , "Donate" , "Logout"]
+                self.optionImages = [#imageLiteral(resourceName: "Profile") , #imageLiteral(resourceName: "About") , #imageLiteral(resourceName: "Bug") , #imageLiteral(resourceName: "Feature") , #imageLiteral(resourceName: "Donation") , #imageLiteral(resourceName: "Logout")]
+            }
+        }
     }
 
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
@@ -57,7 +66,37 @@ class FourthViewController: UIViewController , UITableViewDelegate , UITableView
             self.performSegue(withIdentifier: "donationSegue", sender: self)
             break
         case 5:
-            //Logout
+            //Logout OR admin controls
+            if self.options[5] == "Admin Menu" {
+                //Administrator!
+                self.performSegue(withIdentifier: "adminSegue", sender: self)
+            } else {
+                // Create the alert controller
+                let alertController = UIAlertController(title: "Logout", message: "Are you sure you want to logout?", preferredStyle: .alert)
+                
+                // Create the actions
+                let yesAction = UIAlertAction(title: "Logout", style: UIAlertActionStyle.default) {
+                    UIAlertAction in
+                    LogoutAction(completion: {
+                        //Return to LoginVC
+                        let loginVC = self.storyboard?.instantiateViewController(withIdentifier: "LoginScreenVC") as! LoginScreenViewController
+                        self.present(loginVC, animated: true, completion: nil)
+                    })
+                }
+                
+                let cancelAction = UIAlertAction(title: "Cancel", style: UIAlertActionStyle.cancel) {
+                    UIAlertAction in
+                }
+                
+                // Add the actions
+                alertController.addAction(yesAction)
+                alertController.addAction(cancelAction)
+                
+                // Present the controller
+                self.present(alertController, animated: true, completion: nil)
+            }
+            break
+        case 6:
             // Create the alert controller
             let alertController = UIAlertController(title: "Logout", message: "Are you sure you want to logout?", preferredStyle: .alert)
             
@@ -81,7 +120,6 @@ class FourthViewController: UIViewController , UITableViewDelegate , UITableView
             
             // Present the controller
             self.present(alertController, animated: true, completion: nil)
-            
             break
         default: break
             //nothing yet

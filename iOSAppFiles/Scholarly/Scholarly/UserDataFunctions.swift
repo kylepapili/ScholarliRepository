@@ -34,6 +34,26 @@ import Firebase
 
 
 
+func userIsAdmin(uid: String, completion: @escaping (Bool)-> Void) {
+    let userRef = Database.database().reference().child("users").child(uid)
+    userRef.child("info").observeSingleEvent(of: .value, with: { (snapshot) in
+        guard let userInfo = snapshot.value as? [String : Any] else {
+            completion(false)
+            return
+        }
+        
+        guard let userAdmin = userInfo["admin"] as? String else {
+            completion(false)
+            return
+        }
+        
+        if userAdmin == "TRUE" {
+            completion(true)
+            return
+        }
+    })
+}
+
 //////////////////////////////
 ////Prepare User Defaults/////
 //////////////////////////////

@@ -94,6 +94,7 @@ class SecondViewController: UIViewController , UITableViewDelegate, UITableViewD
             self.assignmentIDS!.remove(at: indexPath.item)
             updateUserAssignmentsFor(assignmentArray: assignmentArray!, completion: {
                 tableView.deleteRows(at: [indexPath], with: .automatic)
+                lytAgendaItemDeleted()
             })
         }
     }

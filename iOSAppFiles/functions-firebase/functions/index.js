@@ -2,7 +2,6 @@ const functions = require('firebase-functions');
 let admin = require('firebase-admin');
 admin.initializeApp(functions.config().firebase);
 
-	
 exports.sendPush = functions.database.ref('/SchoolData/{school}/ClassData/{classID}/Messages/{messageID}').onWrite(event => {
 	let projectData = event.data.val();
 	let classID = event.params.classID;
@@ -15,6 +14,7 @@ exports.sendPush = functions.database.ref('/SchoolData/{school}/ClassData/{class
 	let messageID = projectData.messageID;
 	
 	//finishedUserBlockStatus(userIsBlocked(uid, ""));
+	
 	
 	if ((projectData.notificationSent !== "TRUE")) {
 		var ref = event.data.ref;
@@ -32,7 +32,9 @@ exports.sendPush = functions.database.ref('/SchoolData/{school}/ClassData/{class
 							title: (''.concat(userFirstName , ' ' , userLastName)),
 							body: messageText,
 							sound: 'default',
-							badge: '1'
+							badge: '1',
+							threadIdentifier: classID,
+							categoryIdentifier: classID
 						}
 					};
 					
@@ -47,7 +49,12 @@ exports.sendPush = functions.database.ref('/SchoolData/{school}/ClassData/{class
 							title: (''.concat(userFirstName , ' ' , userLastName)),
 							body: "Photo Message",
 							sound: 'default',
-							badge: '1'
+							badge: '1',
+							threadIdentifier: classID,
+							categoryIdentifier: classID
+						},
+						data: {
+						  id: classID
 						}
 					};
 					
@@ -103,7 +110,7 @@ exports.sendPush = functions.database.ref('/SchoolData/{school}/ClassData/{class
 		let defer = new Promise((resolve, reject) => {
 			users.forEach(function(listItem, index){
 				getDeviceTokenForUser(users[index]).then(token => {
-					if ((token !== "DONOTINCLUDE") && (token !== "") && (token !== null)) {
+					if ((token !== "DONOTINCLUDE") && (token !== "") && (token !== null) && (token)) {
 						tokenArrayToNotify.push(token);
 					} else {
 					}

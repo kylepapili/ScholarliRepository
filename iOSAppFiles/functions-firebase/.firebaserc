@@ -1,5 +1,6 @@
 {
   "projects": {
-    "default": "scholarly2-10052"
+    "default": "scholarly2-10052",
+    "scholarliProduction": "scholarli-production"
   }
 }

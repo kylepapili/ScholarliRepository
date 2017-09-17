@@ -16,6 +16,7 @@ import UserNotifications
 class AppDelegate: UIResponder, UIApplicationDelegate, UNUserNotificationCenterDelegate , MessagingDelegate {
     
     var didLaunchFromBackground : Bool = false
+    var backgroundLaunchClassID : String = ""
     var window: UIWindow?
     
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplicationLaunchOptionsKey: Any]?) -> Bool {
@@ -78,6 +79,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate, UNUserNotificationCenterD
                                         
                                         UIView.transition(with: self.window!, duration: 0.3, options: .transitionCurlUp, animations: {
                                             print("LAUNCHED FROM BACKGROUND NOTIFICATION!!!!!******!!!***!!!***!!!***")
+                                            print(self.backgroundLaunchClassID)
                                             self.window?.rootViewController = initialViewControlleripad
                                             
                                             self.window?.makeKeyAndVisible()
@@ -179,18 +181,34 @@ class AppDelegate: UIResponder, UIApplicationDelegate, UNUserNotificationCenterD
     @available(iOS 10.0, *)
     func userNotificationCenter(_ center: UNUserNotificationCenter, didReceive response: UNNotificationResponse, withCompletionHandler completionHandler: @escaping () -> Void) {
         // if you set a member variable in didReceiveRemoteNotification, you  will know if this is from closed or background
-        print("Handle push from background or closed\(response.notification.request.content.userInfo)")
+        didLaunchFromBackground = true
+        
+        print(response.notification.request.content.userInfo)
+        print(response.notification.request.content.userInfo[AnyHashable("gcm.notification.threadIdentifier")])
+        
+        guard let backgroundID = response.notification.request.content.userInfo[AnyHashable("gcm.notification.threadIdentifier")] as? String else {
+            return
+        }
+        
+        self.backgroundLaunchClassID = backgroundID
+        self.didLaunchFromBackground = true
+        
         
     }
+    
     
     func application(_ application: UIApplication, didReceiveRemoteNotification userInfo: [AnyHashable : Any], fetchCompletionHandler completionHandler: @escaping (UIBackgroundFetchResult) -> Void) {
         
         let currentBadgeNumber = application.applicationIconBadgeNumber
         application.applicationIconBadgeNumber = currentBadgeNumber + 1
         
+        print("RECEIVED NOTIFICATION REMOTELY!!!")
+        
         if(application.applicationState == UIApplicationState.inactive || application.applicationState == UIApplicationState.background) {
             //Launched from background
             didLaunchFromBackground = true
+            print("LAUNCHED FROM BACKGROUND!!!")
+            
         }
     }
     
@@ -224,6 +242,9 @@ class AppDelegate: UIResponder, UIApplicationDelegate, UNUserNotificationCenterD
     
     func applicationWillEnterForeground(_ application: UIApplication) {
         // Called as part of the transition from the background to the active state; here you can undo many of the changes made on entering the background.
+        if self.didLaunchFromBackground {
+            print(self.backgroundLaunchClassID)
+        }
     }
     
     func applicationDidBecomeActive(_ application: UIApplication) {

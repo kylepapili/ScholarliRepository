@@ -74,16 +74,28 @@ class AdminClassEditorViewController: UIViewController , UITableViewDataSource ,
     }
 
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return self.classes.count
+        if isSearching {
+            return self.filteredData.count
+        } else {
+            return self.classes.count
+        }
     }
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         //Do something
-        guard let idToPass = self.classes[indexPath.row]["classID"] as? String else {
-            return
+        if isSearching {
+            guard let idToPass = self.filteredData[indexPath.row]["classID"] as? String else {
+                return
+            }
+            self.SelectedCellID = idToPass
+        } else {
+            guard let idToPass = self.classes[indexPath.row]["classID"] as? String else {
+                return
+            }
+            self.SelectedCellID = idToPass
         }
-        self.SelectedCellID = idToPass
-        self.performSegue(withIdentifier: "adminEditClassSegue", sender: self)
+        self.performSegue(withIdentifier: "AdminClassEditSegueToAddClassVC", sender: self)
+        
     }
     
     func startObserver() {
@@ -104,9 +116,11 @@ class AdminClassEditorViewController: UIViewController , UITableViewDataSource ,
     }
     
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        if segue.identifier == "adminEditClassSegue" {
-            let destinationVC = segue.destination as? AdminEditClassViewController
-            destinationVC?.classIDToEdit = self.SelectedCellID
+        if segue.identifier == "AdminClassEditSegueToAddClassVC" {
+            
+            let destinationVC = segue.destination as? AddClassViewController
+            destinationVC?.classToDisplay = self.SelectedCellID
+            destinationVC?.sender = "ADMIN"
         }
     }
     

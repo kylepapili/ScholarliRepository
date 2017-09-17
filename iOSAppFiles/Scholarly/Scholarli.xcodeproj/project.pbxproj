@@ -28,7 +28,6 @@
 		5E2ECABB1F6B7847005F309C /* AdminSettingsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5E2ECABA1F6B7847005F309C /* AdminSettingsViewController.swift */; };
 		5E2ECABD1F6B7A89005F309C /* AdminTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5E2ECABC1F6B7A89005F309C /* AdminTableViewCell.swift */; };
 		5E2ECABF1F6B7C3E005F309C /* AdminClassEditorViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5E2ECABE1F6B7C3E005F309C /* AdminClassEditorViewController.swift */; };
-		5E2ECAC11F6B8375005F309C /* AdminEditClassViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5E2ECAC01F6B8375005F309C /* AdminEditClassViewController.swift */; };
 		5E3762CB1F3C117B00A47EBB /* ImageDisplayViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5E3762CA1F3C117B00A47EBB /* ImageDisplayViewController.swift */; };
 		5E419DA31F32BD8B00AA062D /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 5E419DA21F32BD8B00AA062D /* Main.storyboard */; };
 		5E419DA51F32C8AA00AA062D /* AboutViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5E419DA41F32C8AA00AA062D /* AboutViewController.swift */; };
@@ -126,7 +125,6 @@
 		5E2ECABA1F6B7847005F309C /* AdminSettingsViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AdminSettingsViewController.swift; sourceTree = "<group>"; };
 		5E2ECABC1F6B7A89005F309C /* AdminTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AdminTableViewCell.swift; sourceTree = "<group>"; };
 		5E2ECABE1F6B7C3E005F309C /* AdminClassEditorViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AdminClassEditorViewController.swift; sourceTree = "<group>"; };
-		5E2ECAC01F6B8375005F309C /* AdminEditClassViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AdminEditClassViewController.swift; sourceTree = "<group>"; };
 		5E3762CA1F3C117B00A47EBB /* ImageDisplayViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ImageDisplayViewController.swift; sourceTree = "<group>"; };
 		5E419DA21F32BD8B00AA062D /* Main.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = Main.storyboard; sourceTree = "<group>"; };
 		5E419DA41F32C8AA00AA062D /* AboutViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AboutViewController.swift; sourceTree = "<group>"; };
@@ -238,7 +236,6 @@
 				5E2ECABA1F6B7847005F309C /* AdminSettingsViewController.swift */,
 				5E2ECABC1F6B7A89005F309C /* AdminTableViewCell.swift */,
 				5E2ECABE1F6B7C3E005F309C /* AdminClassEditorViewController.swift */,
-				5E2ECAC01F6B8375005F309C /* AdminEditClassViewController.swift */,
 			);
 			name = Admin;
 			sourceTree = "<group>";
@@ -845,7 +842,6 @@
 				5E474C641F5BCB0D00674F8C /* ClassEditorViewController.swift in Sources */,
 				5E99352E1EF99153004201AB /* FirstViewController.swift in Sources */,
 				5EC6BD771F185E6A005675F5 /* IQTextView.swift in Sources */,
-				5E2ECAC11F6B8375005F309C /* AdminEditClassViewController.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

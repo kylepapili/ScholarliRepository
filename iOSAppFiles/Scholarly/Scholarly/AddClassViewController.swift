@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import Firebase
 
 class AddClassViewController: UIViewController , UITextFieldDelegate , UIPickerViewDelegate , UIPickerViewDataSource{
     
@@ -17,7 +18,8 @@ class AddClassViewController: UIViewController , UITextFieldDelegate , UIPickerV
     @IBOutlet var TeacherTitleButton: UIButton!
     @IBOutlet var PeriodButton: UIButton!
     @IBOutlet var PickerView: UIPickerView!
-    
+    @IBOutlet var DeleteButton: UIButton!
+    @IBOutlet var AddClassButton: UIButton!
     
     //Properties
     var currentSelection : Selection = .None
@@ -28,6 +30,9 @@ class AddClassViewController: UIViewController , UITextFieldDelegate , UIPickerV
     var currentPeriod : String? = nil
     var currentTitle : String? = nil
     var sender : String? = nil
+    var classToDisplay: String? = nil
+    var classBeingEdited : courseData? = nil
+    var currentClassValues : courseData? = nil
     
     //Structs / Enums
     struct Explanations {
@@ -44,7 +49,69 @@ class AddClassViewController: UIViewController , UITextFieldDelegate , UIPickerV
     override func viewDidLoad() {
         super.viewDidLoad()
         PickerView.isHidden = true
+        if (self.sender == "ADMIN") {
+            retrieveClassData(classID: self.classToDisplay!, completion: {
+                self.prepareForAdmin()
+            })
+        } else {
+            self.DeleteButton.isHidden = true
+        }
     }
+    
+    func prepareForAdmin() {
+        
+        self.currentClassValues = self.classBeingEdited
+        
+        
+        guard let displayClass = self.classBeingEdited as? courseData else {
+            print("Error in AddClassVC")
+            return
+        }
+        
+        self.ClassNameText.text = displayClass.course
+        self.TeacherLastNameText.text = displayClass.teacherLastName
+        self.TeacherTitleButton.titleLabel?.text = displayClass.teacherTitle
+        self.PeriodButton.titleLabel?.text = displayClass.period
+        self.DeleteButton.isHidden = false
+        self.AddClassButton.titleLabel?.text = "Edit Class"
+    }
+    
+    @IBAction func DeleteClass(_ sender: Any) {
+        let alert = UIAlertController(title: "Delete Class?", message: "Are you sure you would like to delete this class?", preferredStyle: UIAlertControllerStyle.alert)
+        alert.addAction(UIAlertAction(title: "Yes", style: UIAlertActionStyle.default, handler: { (alertAction) in
+            deleteClass(withID: self.classToDisplay!) {
+                let alert = UIAlertController(title: "Class Deleted", message: "The class has been deleted. Thank you.", preferredStyle: UIAlertControllerStyle.alert)
+                alert.addAction(UIAlertAction(title: "Done", style: UIAlertActionStyle.default, handler: { (alertAction) in
+                    //Return to ClassSelector or to class editor
+                    if self.sender != "editor" {
+                        self.navigationController?.popViewController(animated: true)
+                    } else {
+                        self.navigationController?.popViewController(animated: true)
+                    }
+                }))
+                self.present(alert, animated: true, completion: nil)
+            }
+        }))
+        self.present(alert, animated: true, completion: nil)
+        
+        
+    }
+    
+    func retrieveClassData(classID: String, completion : @escaping () -> Void) {
+        let classRef = Database.database().reference().child("SchoolData").child(UserDefaults.standard.value(forKey: String(describing: UserDefaultKeys.School)) as! String).child("classes").child(classID)
+        
+        classRef.observeSingleEvent(of: .value, with: { (snapshot) in
+            guard let classData = snapshot.value as? [String : Any] else {
+                return
+            }
+            
+            self.classBeingEdited = courseData(classID: classData["classID"] as! String, course: classData["course"] as! String, period: classData["period"] as! String, teacherLastName: classData["teacherLastName"] as! String, teacherTitle: classData["teacherTitle"] as! String)
+            completion()
+            
+        })
+        
+    }
+    
     
     //Picker View Functions
     func numberOfComponents(in pickerView: UIPickerView) -> Int {
@@ -114,6 +181,46 @@ class AddClassViewController: UIViewController , UITextFieldDelegate , UIPickerV
     
     //Add Class Action
     @IBAction func AddClass(_ sender: Any) {
+        
+        if self.sender == "ADMIN" {
+            //Edit Class, NOT add
+            guard var classValues = self.currentClassValues as? courseData else {
+                print("error")
+                return
+            }
+            if self.currentPeriod != nil {
+                classValues.period = self.currentPeriod!
+            } else {
+                classValues.period = (self.classBeingEdited?.period)!
+            }
+            
+            if self.currentPeriod != nil {
+                classValues.teacherTitle = self.currentTitle!
+            } else {
+                classValues.teacherTitle = (self.classBeingEdited?.period)!
+            }
+            classValues.course = self.ClassNameText.text!
+            classValues.teacherLastName = self.TeacherLastNameText.text!
+            
+            
+            
+            editClass(withID: self.classToDisplay!, toData: classValues, completion: {
+                //Class edited
+                let alert = UIAlertController(title: "Class Edited", message: "Thank you for your contribution. Your class has been updated!", preferredStyle: UIAlertControllerStyle.alert)
+                alert.addAction(UIAlertAction(title: "Done", style: UIAlertActionStyle.default, handler: { (alertAction) in
+                    //Return to ClassSelector or to class editor
+                    if self.sender != "editor" {
+                        self.navigationController?.popViewController(animated: true)
+                    } else {
+                        self.navigationController?.popViewController(animated: true)
+                    }
+                }))
+                self.present(alert, animated: true, completion: nil)
+            })
+            return
+        }
+        
+        
         if ClassNameText.text != "" && ClassNameText.text != nil && TeacherLastNameText.text != "" && TeacherLastNameText.text != nil && TeacherTitleButton.titleLabel?.text != "Teacher Title" && PeriodButton.titleLabel?.text != "Period" && currentPeriod != nil && currentTitle != nil{
             //Values Filled in. Class can be added
             let ClassName = ClassNameText.text

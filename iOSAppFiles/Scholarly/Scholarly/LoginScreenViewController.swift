@@ -18,6 +18,9 @@ class LoginScreenViewController: UIViewController {
     @IBOutlet var segmentControl: UISegmentedControl!
     @IBOutlet var actionButton: UIButton!
     @IBOutlet var errorLabel : UILabel!
+    @IBOutlet var ActivityIndicator: UIActivityIndicatorView!
+    
+    
     
     var userState : currentState = .login
     
@@ -30,13 +33,17 @@ class LoginScreenViewController: UIViewController {
         actionButton.setTitle("Login", for: .normal)
         errorLabel.isHidden = true
         confirmPasswordText.isHidden = true
+        ActivityIndicator.isHidden = true
     }
     
     @IBAction func action (_ sender: Any) {
+        ActivityIndicator.isHidden = false
+        ActivityIndicator.startAnimating()
         if emailText.text == "" || passwordText.text == "" {
             //Error, insufficient information
             errorLabel.text = "All Fields Must Be Completed"
             errorLabel.isHidden = false
+            ActivityIndicator.isHidden = true
             return
         }
         switch userState {
@@ -70,10 +77,12 @@ class LoginScreenViewController: UIViewController {
                     guard let myError = error?.localizedDescription else {
                         self.errorLabel.text = "Unknown Error"
                         self.errorLabel.isHidden = false
+                        self.ActivityIndicator.isHidden = true
                         return
                     }
                     self.errorLabel.text = myError
                     self.errorLabel.isHidden = false
+                    self.ActivityIndicator.isHidden = true
                 }
             })
         case .signup:
@@ -88,15 +97,18 @@ class LoginScreenViewController: UIViewController {
                         guard let myError = error?.localizedDescription else {
                             self.errorLabel.text = "Unknown Error"
                             self.errorLabel.isHidden = false
+                            self.ActivityIndicator.isHidden = true
                             return
                         }
                         self.errorLabel.text = myError
                         self.errorLabel.isHidden = false
+                        self.ActivityIndicator.isHidden = true
                     }
                 })
             } else {
                 self.errorLabel.text = "Passwords do not match"
                 self.errorLabel.isHidden = false
+                ActivityIndicator.isHidden = true
             }
         }
     }

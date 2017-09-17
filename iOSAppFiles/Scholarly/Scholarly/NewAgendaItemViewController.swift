@@ -306,6 +306,7 @@ class NewAgendaItemViewController: UIViewController , UIPickerViewDelegate , UIP
         //Database Write
         postAssignment(assignment: assignment!) {
             //Finished writing need to go back to first VC
+            lytAgendaItemAdded()
             _ = self.navigationController?.popViewController(animated: true)
         }
     }

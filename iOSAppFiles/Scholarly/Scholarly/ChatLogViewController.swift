@@ -553,6 +553,7 @@ class ChatLogViewController: UIViewController , UITableViewDelegate , UITableVie
                     if (messageSendStatus == MessageSendStatus.success) {
                         self.tableViewScrollToBottom(animated: true, delay: true)
                         self.MessageFieldOutlet.text = ""
+                        lytTextMessageSent()
                     }
                 }
             }
@@ -792,6 +793,7 @@ class ChatLogViewController: UIViewController , UITableViewDelegate , UITableVie
                 self.tableViewScrollToBottom(animated: true, delay: true)
                 self.MessageFieldOutlet.text = ""
                 self.ProgressViewBar.isHidden = true
+                lytImageMessageSent()
             })
         }
     }

@@ -9,6 +9,45 @@
 import Foundation
 import Firebase
 
+func editClass(withID: String, toData : courseData, completion: () -> Void) {
+    guard let school = UserDefaults.standard.value(forKey: String(describing: UserDefaultKeys.School)) as? String else {
+        print("Error in addClass")
+        return
+    }
+    let schoolRef = Database.database().reference().child("SchoolData").child(school)
+    let classRef = schoolRef.child("classes").child(withID)
+    
+    //Update Classes Table
+    let valuesToUpdate = ["classID" : toData.classID,
+                          "course" : toData.course,
+                          "period" : toData.period,
+                          "teacherLastName" : toData.teacherLastName,
+                          "teacherTitle" : toData.teacherTitle]
+    classRef.updateChildValues(valuesToUpdate)
+    
+    //Update ClassData
+    let classDataRef = schoolRef.child("ClassData").child(withID).child("DisplayInfo").child("ClassName")
+    classDataRef.setValue(toData.course)
+    completion()
+}
+
+func deleteClass(withID: String, completion: () -> Void) {
+    guard let school = UserDefaults.standard.value(forKey: String(describing: UserDefaultKeys.School)) as? String else {
+        print("Error in addClass")
+        return
+    }
+    let schoolRef = Database.database().reference().child("SchoolData").child(school)
+    let classesRef = schoolRef.child("classes")
+    
+    classesRef.child(withID).removeValue()
+    
+    
+    let classDataRef = schoolRef.child("ClassData").child(withID).removeValue()
+    
+    
+    completion()
+}
+
 func addClass(ClassName: String, TeacherLastName: String, TeacherTitle: String, Period: String, completion: () -> Void) {
     guard let school = UserDefaults.standard.value(forKey: String(describing: UserDefaultKeys.School)) as? String else {
         print("Error in addClass")

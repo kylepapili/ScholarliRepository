@@ -20,6 +20,14 @@ enum UserDefaultKeys {
     case FirstName, LastName, PhoneNumber, School, Classes, UID, Email
 }
 
+struct courseData {
+    var classID : String
+    var course : String
+    var period : String
+    var teacherLastName : String
+    var teacherTitle : String
+}
+
 struct Message {
     var messageType : MessageType = .text
     var message : String? = ""

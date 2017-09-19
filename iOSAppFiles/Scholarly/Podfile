@@ -11,6 +11,8 @@ target 'Scholarly' do
     pod 'Firebase/Storage'
     pod 'Firebase/Database'
     pod 'Firebase/Auth'
+    pod 'BRYXBanner'
+
   target 'ScholarlyTests' do
     inherit! :search_paths
     # Pods for testing
@@ -19,6 +21,7 @@ target 'Scholarly' do
     pod 'Firebase/Storage'
     pod 'Firebase/Database'
     pod 'Firebase/Auth'
+    pod 'BRYXBanner'
   end
 
   target 'ScholarlyUITests' do
@@ -29,6 +32,7 @@ target 'Scholarly' do
     pod 'Firebase/Storage'
     pod 'Firebase/Database'
     pod 'Firebase/Auth'
+    pod 'BRYXBanner'
   end
 
 end

@@ -9,6 +9,14 @@
 import Foundation
 import Firebase
 
+func GoToClassVC(fromVC : UIViewController, toClassID: String) {
+    let chatLog = ChatLogViewController()
+    fromVC.present(chatLog, animated: true) {
+        chatLog.classID = toClassID
+    }
+}
+
+
 func editClass(withID: String, toData : courseData, completion: () -> Void) {
     guard let school = UserDefaults.standard.value(forKey: String(describing: UserDefaultKeys.School)) as? String else {
         print("Error in addClass")

@@ -11,6 +11,7 @@ import Firebase
 import FirebaseAuth
 import FirebaseMessaging
 import UserNotifications
+import BRYXBanner
 
 @UIApplicationMain
 class AppDelegate: UIResponder, UIApplicationDelegate, UNUserNotificationCenterDelegate , MessagingDelegate {
@@ -172,9 +173,22 @@ class AppDelegate: UIResponder, UIApplicationDelegate, UNUserNotificationCenterD
         let body : String = d["body"] as! String
         let title : String = d["title"] as! String
         print("Title:\(title) + body:\(body)")
+        guard let backgroundID = notification.request.content.userInfo[AnyHashable("gcm.notification.threadIdentifier")] as? String else {
+            return
+        }
+        print("CLASS ID: \(backgroundID)")
+        self.backgroundLaunchClassID = backgroundID
         //self.showAlertAppDelegate(title: title,message:body,buttonTitle:"ok",window:self.window!)
         
-        print("LOCAL NOTIFICATION Should be sending! Need to impliment")
+        
+        let banner = Banner(title: title, subtitle: body, image: #imageLiteral(resourceName: "MessageIcon"), backgroundColor: UIColor(red:40.00/255.0, green:170.0/255.0, blue:226/255.0, alpha:1.000))
+        guard let myVC = self.window?.currentViewController() else {
+            print("ERROR")
+            return
+        }
+        banner.dismissesOnTap = true
+        banner.show(duration: 3.0)
+        GoToClassVC(fromVC: myVC, toClassID: self.backgroundLaunchClassID)
         
     }
     

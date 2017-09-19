@@ -4,6 +4,11 @@
 <dict>
 	<key>SchemeUserState</key>
 	<dict>
+		<key>BRYXBanner.xcscheme</key>
+		<dict>
+			<key>isShown</key>
+			<false/>
+		</dict>
 		<key>GTMSessionFetcher.xcscheme</key>
 		<dict>
 			<key>isShown</key>
@@ -34,6 +39,11 @@
 			<key>isShown</key>
 			<false/>
 		</dict>
+		<key>leveldb-library.xcscheme</key>
+		<dict>
+			<key>isShown</key>
+			<false/>
+		</dict>
 		<key>nanopb.xcscheme</key>
 		<dict>
 			<key>isShown</key>
@@ -42,12 +52,27 @@
 	</dict>
 	<key>SuppressBuildableAutocreation</key>
 	<dict>
-		<key>289C16A1753838A0126BDF3E32D20E3E</key>
+		<key>0F3B36547C3C2CC3060475E614BCBF32</key>
 		<dict>
 			<key>primary</key>
 			<true/>
 		</dict>
-		<key>62009D4AC2B69B46AF018CF47CF7AD6F</key>
+		<key>12F6209F14EBE8CC188668C8F3058519</key>
+		<dict>
+			<key>primary</key>
+			<true/>
+		</dict>
+		<key>266AE1506DAD13D34C0725E909C0C476</key>
+		<dict>
+			<key>primary</key>
+			<true/>
+		</dict>
+		<key>2DE4909D5EA7106173CADE411AAB88BE</key>
+		<dict>
+			<key>primary</key>
+			<true/>
+		</dict>
+		<key>333138D9D42C00A2D5985160ED1BFED6</key>
 		<dict>
 			<key>primary</key>
 			<true/>
@@ -57,17 +82,12 @@
 			<key>primary</key>
 			<true/>
 		</dict>
-		<key>A1CF45C7F8419C8676AC265B69F8F405</key>
+		<key>6EB19A7FF3482F82236E7619F25E9711</key>
 		<dict>
 			<key>primary</key>
 			<true/>
 		</dict>
 		<key>C052BEBFBD0AB5218CC64BA3450F6547</key>
-		<dict>
-			<key>primary</key>
-			<true/>
-		</dict>
-		<key>CF03FCA095977CCD617D77C05FE60D11</key>
 		<dict>
 			<key>primary</key>
 			<true/>

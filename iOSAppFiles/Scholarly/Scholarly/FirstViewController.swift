@@ -85,11 +85,29 @@ class FirstViewController: UIViewController , UITableViewDelegate , UITableViewD
         self.performSegue(withIdentifier: "ToChatLogVC", sender: self)
     }
     
+    func loadChatVCFromNotification(withClassID: String) {
+        self.classID = withClassID
+        self.performSegue(withIdentifier: "ChatLogVCFromNotification", sender: self)
+    }
+    
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        //Need to pass ChatLogVC the ClassId
-        let destinationVC = segue.destination as! ChatLogViewController
-        destinationVC.classID = self.classID!
-        destinationVC.className = self.className!
+        guard let identifier = segue.identifier else {
+            return
+        }
+        switch identifier {
+        case "ToChatLogVC" :
+            //Need to pass ChatLogVC the ClassId AND ClassName
+            let destinationVC = segue.destination as! ChatLogViewController
+            destinationVC.classID = self.classID!
+            destinationVC.className = self.className!
+            
+        case "ChatLogVCFromNotification" :
+            let destinationVC = segue.destination as! ChatLogViewController
+            destinationVC.classID = self.classID!
+        default:
+            return
+        }
+        
     }
 }
 

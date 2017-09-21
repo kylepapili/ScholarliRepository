@@ -13,12 +13,14 @@ import FirebaseMessaging
 import UserNotifications
 import BRYXBanner
 
+
 @UIApplicationMain
 class AppDelegate: UIResponder, UIApplicationDelegate, UNUserNotificationCenterDelegate , MessagingDelegate {
     
     var didLaunchFromBackground : Bool = false
     var backgroundLaunchClassID : String = ""
     var window: UIWindow?
+    
     
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplicationLaunchOptionsKey: Any]?) -> Bool {
         //MARK: - Keyboard Manager
@@ -116,10 +118,6 @@ class AppDelegate: UIResponder, UIApplicationDelegate, UNUserNotificationCenterD
                     self.redirectToLoginScreen()
                 }
             })
-            
-            
-            
-            
         }
         else {
             redirectToLoginScreen()
@@ -146,6 +144,34 @@ class AppDelegate: UIResponder, UIApplicationDelegate, UNUserNotificationCenterD
         self.window?.makeKeyAndVisible()
     }
     
+    func GoToClassVC(fromVC : UIViewController, toClassID: String) {
+        let storyboard : UIStoryboard = UIStoryboard(name: "Main", bundle: nil)
+        
+        guard let navVC = storyboard.instantiateViewController(withIdentifier: "initialNavVC") as? UINavigationController else {
+            print("ERROR IN GoToClassVC 1")
+            return
+        }
+        
+        guard let FirstVC = storyboard.instantiateViewController(withIdentifier: "MessageScreenVC") as? FirstViewController else {
+            print("Error in GoToClassVC 2")
+            return
+        }
+        
+        guard let TabBar = storyboard.instantiateViewController(withIdentifier: "HomeScreenVC") as? TabController else {
+            print("Error in GoToClassVC 4")
+            return
+        }
+        
+        //Current issue is that the Nav View Controller is presented without the TabBarController. Need to switch TabBar to NavVC, Pop to FirstVC, and performSegue to ChatLogVC
+        let allVC = navVC.viewControllers
+        self.window?.rootViewController = navVC
+        navVC.popToViewController(allVC[0], animated: true)
+        self.window?.makeKeyAndVisible()
+        
+        
+        (allVC[0] as! FirstViewController).loadChatVCFromNotification(withClassID: toClassID)
+        
+    }
     
     //Firebase Notifications
     func application(_ application: UIApplication, didRegisterForRemoteNotificationsWithDeviceToken deviceToken: Data) {
@@ -180,15 +206,14 @@ class AppDelegate: UIResponder, UIApplicationDelegate, UNUserNotificationCenterD
         self.backgroundLaunchClassID = backgroundID
         //self.showAlertAppDelegate(title: title,message:body,buttonTitle:"ok",window:self.window!)
         
-        
         let banner = Banner(title: title, subtitle: body, image: #imageLiteral(resourceName: "MessageIcon"), backgroundColor: UIColor(red:40.00/255.0, green:170.0/255.0, blue:226/255.0, alpha:1.000))
-        guard let myVC = self.window?.currentViewController() else {
-            print("ERROR")
-            return
-        }
-        banner.dismissesOnTap = true
+        
         banner.show(duration: 3.0)
-        GoToClassVC(fromVC: myVC, toClassID: self.backgroundLaunchClassID)
+        //banner.didTapBlock = GoToClassVC(fromVC: currentVC, toClassID: self.backgroundLaunchClassID)
+        
+        banner.didTapBlock = {
+            self.GoToClassVC(fromVC: UIApplication.shared.keyWindow!.visibleViewController()!, toClassID: self.backgroundLaunchClassID)
+        }
         
     }
     
@@ -272,3 +297,46 @@ class AppDelegate: UIResponder, UIApplicationDelegate, UNUserNotificationCenterD
     
 }
 
+
+extension UIWindow {
+    
+    func visibleViewController() -> UIViewController? {
+        if let rootViewController: UIViewController = self.rootViewController {
+            return UIWindow.getVisibleViewControllerFrom(vc: rootViewController)
+        }
+        return nil
+    }
+    
+    class func getVisibleViewControllerFrom(vc:UIViewController) -> UIViewController {
+        
+        if vc.isKind(of:UINavigationController.self) {
+            
+            let navigationController = vc as! UINavigationController
+            return UIWindow.getVisibleViewControllerFrom( vc: navigationController.viewControllers.first!)
+            
+        } else if vc.isKind(of:UITabBarController.self) {
+            
+            let tabBarController = vc as! UITabBarController
+            return UIWindow.getVisibleViewControllerFrom(vc: tabBarController.selectedViewController!)
+            
+        }else if vc.isKind(of:UIAlertController.self) {
+            
+            let tabBarController = vc as! UIAlertController
+            return UIWindow.getVisibleViewControllerFrom(vc: tabBarController)
+            
+        } else {
+            
+            if let presentedViewController = vc.presentedViewController {
+                if (presentedViewController.presentedViewController != nil){
+                    return UIWindow.getVisibleViewControllerFrom(vc: presentedViewController.presentedViewController!)
+                }else{
+                    return UIViewController()
+                }
+                
+            } else {
+                
+                return vc;
+            }
+        }
+    }
+}

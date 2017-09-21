@@ -37,7 +37,12 @@ class ChatLogViewController: UIViewController , UITableViewDelegate , UITableVie
     // MARK: - ViewDidLoad
     override func viewDidLoad() { //Don't clutter with logic
         super.viewDidLoad()
-        self.title = self.className
+        
+        if self.className != "" {
+            self.title = self.className
+        } else {
+            self.title = "Temporary Title"
+        }
         
         // Resize table view automatically
         self.tableView.rowHeight = UITableViewAutomaticDimension

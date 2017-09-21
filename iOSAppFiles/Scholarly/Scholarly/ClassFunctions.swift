@@ -9,12 +9,7 @@
 import Foundation
 import Firebase
 
-func GoToClassVC(fromVC : UIViewController, toClassID: String) {
-    let chatLog = ChatLogViewController()
-    fromVC.present(chatLog, animated: true) {
-        chatLog.classID = toClassID
-    }
-}
+
 
 
 func editClass(withID: String, toData : courseData, completion: () -> Void) {

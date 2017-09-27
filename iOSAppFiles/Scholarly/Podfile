@@ -12,6 +12,7 @@ target 'Scholarly' do
     pod 'Firebase/Database'
     pod 'Firebase/Auth'
     pod 'BRYXBanner'
+    pod 'IQKeyboardManager'
 
   target 'ScholarlyTests' do
     inherit! :search_paths
@@ -22,6 +23,7 @@ target 'Scholarly' do
     pod 'Firebase/Database'
     pod 'Firebase/Auth'
     pod 'BRYXBanner'
+    pod 'IQKeyboardManager'
   end
 
   target 'ScholarlyUITests' do
@@ -33,6 +35,7 @@ target 'Scholarly' do
     pod 'Firebase/Database'
     pod 'Firebase/Auth'
     pod 'BRYXBanner'
+    pod 'IQKeyboardManager'
   end
 
 end

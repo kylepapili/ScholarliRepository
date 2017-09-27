@@ -146,31 +146,24 @@ class AppDelegate: UIResponder, UIApplicationDelegate, UNUserNotificationCenterD
     
     func GoToClassVC(fromVC : UIViewController, toClassID: String) {
         let storyboard : UIStoryboard = UIStoryboard(name: "Main", bundle: nil)
-        
         guard let navVC = storyboard.instantiateViewController(withIdentifier: "initialNavVC") as? UINavigationController else {
             print("ERROR IN GoToClassVC 1")
             return
         }
-        
         guard let FirstVC = storyboard.instantiateViewController(withIdentifier: "MessageScreenVC") as? FirstViewController else {
             print("Error in GoToClassVC 2")
             return
         }
-        
         guard let TabBar = storyboard.instantiateViewController(withIdentifier: "HomeScreenVC") as? TabController else {
             print("Error in GoToClassVC 4")
             return
         }
-        
         //Current issue is that the Nav View Controller is presented without the TabBarController. Need to switch TabBar to NavVC, Pop to FirstVC, and performSegue to ChatLogVC
         let allVC = navVC.viewControllers
         self.window?.rootViewController = navVC
         navVC.popToViewController(allVC[0], animated: true)
         self.window?.makeKeyAndVisible()
-        
-        
         (allVC[0] as! FirstViewController).loadChatVCFromNotification(withClassID: toClassID)
-        
     }
     
     //Firebase Notifications

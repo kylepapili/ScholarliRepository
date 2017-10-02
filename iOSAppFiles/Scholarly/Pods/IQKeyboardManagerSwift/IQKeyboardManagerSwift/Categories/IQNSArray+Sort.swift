@@ -1,5 +1,5 @@
 //
-//  IQUIWindow+Hierarchy.swift
+//  IQNSArray+Sort.swift
 // https://github.com/hackiftekhar/IQKeyboardManager
 // Copyright (c) 2013-16 Iftekhar Qurashi.
 //
@@ -21,33 +21,53 @@
 // OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 // THE SOFTWARE.
 
-
+import Foundation
 import UIKit
 
-/** @abstract UIWindow hierarchy category.  */
-public extension UIWindow {
-
-    /** @return Returns the current Top Most ViewController in hierarchy.   */
-    override public func topMostController()->UIViewController? {
+/**
+UIView.subviews sorting category.
+*/
+internal extension Array {
+    
+    ///--------------
+    /// MARK: Sorting
+    ///--------------
+    
+    /**
+    Returns the array by sorting the UIView's by their tag property.
+    */
+    internal func sortedArrayByTag() -> [Element] {
         
-        var topController = rootViewController
-        
-        while let presentedController = topController?.presentedViewController {
-            topController = presentedController
-        }
-        
-        return topController
+        return sorted(by: { (obj1 : Element, obj2 : Element) -> Bool in
+            
+            let view1 = obj1 as! UIView
+            let view2 = obj2 as! UIView
+            
+            return (view1.tag < view2.tag)
+        })
     }
     
-    /** @return Returns the topViewController in stack of topMostController.    */
-    public func currentViewController()->UIViewController? {
+    /**
+    Returns the array by sorting the UIView's by their tag property.
+    */
+    internal func sortedArrayByPosition() -> [Element] {
         
-        var currentViewController = topMostController()
-        
-        while currentViewController != nil && currentViewController is UINavigationController && (currentViewController as! UINavigationController).topViewController != nil {
-            currentViewController = (currentViewController as! UINavigationController).topViewController
-        }
-
-        return currentViewController
+        return sorted(by: { (obj1 : Element, obj2 : Element) -> Bool in
+            
+            let view1 = obj1 as! UIView
+            let view2 = obj2 as! UIView
+            
+            let x1 = view1.frame.minX
+            let y1 = view1.frame.minY
+            let x2 = view2.frame.minX
+            let y2 = view2.frame.minY
+            
+            if y1 != y2 {
+                return y1 < y2
+            } else {
+                return x1 < x2
+            }
+        })
     }
 }
+

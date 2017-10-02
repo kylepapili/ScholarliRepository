@@ -352,6 +352,18 @@ class ChatLogViewController: UIViewController , UITableViewDelegate , UITableVie
             }
         })
         
+        
+        // Keyboard Bug Fix
+        NotificationCenter.default.addObserver(self,
+                                               selector: #selector(keyboardWillHideForResizing),
+                                               name: Notification.Name.UIKeyboardWillHide,
+                                               object: nil)
+        
+    }
+    
+    func keyboardWillHideForResizing(notification: Notification) {
+        self.view.window?.setNeedsLayout()
+        self.view.window?.layoutIfNeeded()
     }
     
     // MARK: - Table View Functions
@@ -496,6 +508,7 @@ class ChatLogViewController: UIViewController , UITableViewDelegate , UITableVie
             }
         }
     }
+    
     //MARK: - Call Segue From Cell
     
     func callSegueFromCell(message: Message)  {

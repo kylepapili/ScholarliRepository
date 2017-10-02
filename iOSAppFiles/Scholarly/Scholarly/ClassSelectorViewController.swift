@@ -8,6 +8,8 @@
 
 import UIKit
 import Firebase
+import IQKeyboardManagerSwift
+
 class ClassSelectorViewController: UIViewController, UITableViewDelegate , UITableViewDataSource, UISearchBarDelegate{
     var classes = [[String : Any]]()
     var UserClassSelections = [String]()

@@ -10,6 +10,8 @@ import Foundation
 import Firebase
 import FirebaseAnalytics
 
+
+
 func lytTextMessageSent() {
     Analytics.logEvent("text_message_sent", parameters: nil)
 }

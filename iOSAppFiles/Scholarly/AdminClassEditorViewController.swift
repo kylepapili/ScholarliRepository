@@ -24,6 +24,17 @@ class AdminClassEditorViewController: UIViewController , UITableViewDataSource ,
     override func viewDidLoad() {
         super.viewDidLoad()
         startObserver()
+        
+        // Keyboard Bug Fix
+        NotificationCenter.default.addObserver(self,
+                                               selector: #selector(keyboardWillHideForResizing),
+                                               name: Notification.Name.UIKeyboardWillHide,
+                                               object: nil)
+    }
+    
+    func keyboardWillHideForResizing(notification: Notification) {
+        self.view.window?.setNeedsLayout()
+        self.view.window?.layoutIfNeeded()
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
